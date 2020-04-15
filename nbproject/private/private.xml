@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/vignatyev/eventmanager/resources/views/home.blade.php</file>
-            <file>file:/home/vignatyev/eventmanager/.env</file>
-            <file>file:/home/vignatyev/eventmanager/resources/views/events.blade.php</file>
-            <file>file:/home/vignatyev/eventmanager/app/Http/Controllers/Auth/RegisterController.php</file>
+            <file>file:/home/vignatyev/eventmanager/app/Event.php</file>
+            <file>file:/home/vignatyev/eventmanager/app/User.php</file>
+            <file>file:/home/vignatyev/eventmanager/resources/views/events/create.blade.php</file>
+            <file>file:/home/vignatyev/eventmanager/resources/views/events/index.blade.php</file>
+            <file>file:/home/vignatyev/eventmanager/app/Schedule.php</file>
             <file>file:/home/vignatyev/eventmanager/routes/web.php</file>
             <file>file:/home/vignatyev/eventmanager/app/Http/Controllers/EventController.php</file>
+            <file>file:/home/vignatyev/eventmanager/resources/views/events/show.blade.php</file>
         </group>
     </open-files>
 </project-private>

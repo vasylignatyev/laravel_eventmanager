@@ -2,38 +2,21 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class Event extends Authenticatable
+class Event extends Model
 {
-    use Notifiable;
+    protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
     protected $fillable = [
-        'name', 'email', 'password',
+        'title', 'short_desc', 'full_desc', 'options', 'duration'
     ];
+    protected $primaryKey = 'id';
+    public $incrementing = false;
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function schedules() {
+        return $this->hasMany(Schedule::class);
+    }
 }
