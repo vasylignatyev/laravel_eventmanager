@@ -30,37 +30,32 @@ class EventController extends Controller
         $events = DB::table('events')->select(DB::raw(self::ROW))->paginate(10);
         return view('events.index', compact('events'));
     }
-    
+
     /**
-     * 
+     *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function create()
     {
-        //dd($id);
-        //$event =  Event::findOrFail($id);
-        
         $data = request()->validate([
             'title' => 'required',
             'short_desc' => '',
             'full_desc' => '',
 //            'image' => ['required', 'image'],
         ]);
-        
+
         return view('events.create');
     }
     public function store() {
         dd(request()->all());
     }
-    
+
     public function show($id) {
         $event = DB::table('events')
             ->where('id', '=', $id)
             ->select(DB::raw(self::ROW))
             ->first();
-        
-        $event->duration = str_split($event->duration, 24);
-        
+
         return view('events.show', compact('event'));
     }
 
@@ -69,16 +64,43 @@ class EventController extends Controller
             ->where('id', '=', $id)
             ->select(DB::raw(self::ROW))
             ->first();
-        
-        $event->duration = str_split($event->duration, 24);
-        
+
+        //$event->duration = str_split($event->duration, 24);
+
         return view('events.edit', compact('event'));
     }
-    
-    public function update(Event $event)
+
+    public function update(Request $request, Event $event)
     {
-        print_r($event);
-        sleep(10);
-        return redirect("/event");
+        $validatedData = $request->validate([
+            //'id' => 'integer',
+            'title' => 'required|max:255',
+            'short_desc' => 'required',
+            'full_desc' => '',
+            'duration' => 'array',
+            'image' => '',
+        ]);
+        $durationArr = [];
+        if( isset($validatedData['duration'])) {
+            $durationLength = (intval(max($validatedData['duration'])/24) + 1) * 24;
+            $durationArr = array_fill(0, $durationLength, "0");
+            foreach ($validatedData['duration'] as $datum) {
+                $durationArr[intval($datum)] = "1";
+            }
+        }
+        $event->duration = implode($durationArr);
+        $event->title = $validatedData['title'];
+        $event->short_desc = $validatedData['short_desc'];
+        if(isset($validatedData['full_desc'])) {
+            $event->full_desc = $validatedData['full_desc'];
+        }
+
+        try {
+            $event->save();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        dd($event);
+        redirect("/");
     }
 }
