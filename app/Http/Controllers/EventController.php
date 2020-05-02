@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use \App\Event;
+use \App\Models\Event;
 
 class EventController extends Controller
 {
-    private const ROW = '`id`, `title`, `short_desc`, `full_desc`, binary_2_binstr(`duration`) duration';
+    private const ROW = '`id`, `title`, `short_desc`, `full_desc`, `created_at`, binary_2_binstr(`duration`) duration';
 
     /**
      * Create a new controller instance.
@@ -19,7 +19,6 @@ class EventController extends Controller
     {
         //$this->middleware('auth');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -28,7 +27,13 @@ class EventController extends Controller
     public function index()
     {
         $events = DB::table('events')->select(DB::raw(self::ROW))->paginate(10);
-        return view('events.index', compact('events'));
+        return json_encode($events);
+    }
+
+    public function list()
+    {
+        $events = DB::table('events')->select(DB::raw(self::ROW))->get();
+        dd($events);
     }
 
     /**
@@ -37,20 +42,32 @@ class EventController extends Controller
      */
     public function create()
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'short_desc' => '',
-            'full_desc' => '',
-//            'image' => ['required', 'image'],
-        ]);
-
         return view('events.create');
     }
-    public function store() {
-        dd(request()->all());
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'short_desc' => 'required',
+            'full_desc' => '',
+            'duration' => 'array',
+            'image' => '',
+        ]);
+
+        $event = new Event;
+        $event->duration = isset($validatedData['duration']) ? $this->getDuration($validatedData['duration']) : '';
+        $event->title = $validatedData['title'];
+        $event->short_desc = $validatedData['short_desc'];
+        if(isset($validatedData['full_desc'])) {
+            $event->full_desc = $validatedData['full_desc'];
+        }
+        $event->save();
+        return redirect("/event")->with('success', 'Event Created');
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $event = DB::table('events')
             ->where('id', '=', $id)
             ->select(DB::raw(self::ROW))
@@ -65,42 +82,47 @@ class EventController extends Controller
             ->select(DB::raw(self::ROW))
             ->first();
 
-        //$event->duration = str_split($event->duration, 24);
-
         return view('events.edit', compact('event'));
     }
 
     public function update(Request $request, Event $event)
     {
         $validatedData = $request->validate([
-            //'id' => 'integer',
             'title' => 'required|max:255',
             'short_desc' => 'required',
             'full_desc' => '',
             'duration' => 'array',
             'image' => '',
         ]);
-        $durationArr = [];
-        if( isset($validatedData['duration'])) {
-            $durationLength = (intval(max($validatedData['duration'])/24) + 1) * 24;
-            $durationArr = array_fill(0, $durationLength, "0");
-            foreach ($validatedData['duration'] as $datum) {
-                $durationArr[intval($datum)] = "1";
-            }
-        }
-        $event->duration = implode($durationArr);
+        $event->duration = isset($validatedData['duration']) ? $this->getDuration($validatedData['duration']) : '';
         $event->title = $validatedData['title'];
         $event->short_desc = $validatedData['short_desc'];
-        if(isset($validatedData['full_desc'])) {
-            $event->full_desc = $validatedData['full_desc'];
+        $validatedData['full_desc'] && $event->full_desc = $validatedData['full_desc'];
+        $event->save();
+        return redirect("/event")->with('success', 'Event Updated');
+    }
+    /**
+     * @param Event $event
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
+    public function destroy(Event $event)
+    {
+        $event->delete();
+        return redirect("/event")->with('success', 'Event Deleted');
+    }
+    /**
+     * @param array $durationArr
+     * @return string
+     */
+    private function getDuration(array $durationArr)
+    {
+        $result = [];
+        $durationLength = (intval(max($durationArr)/24) + 1) * 24;
+        $result = array_fill(0, $durationLength, "0");
+        foreach ($durationArr as $datum) {
+            $result[intval($datum)] = "1";
         }
-
-        try {
-            $event->save();
-        } catch (\Exception $e) {
-            dd($e);
-        }
-        dd($event);
-        redirect("/");
+        return implode($result);
     }
 }

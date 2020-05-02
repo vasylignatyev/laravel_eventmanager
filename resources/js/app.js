@@ -6,8 +6,17 @@
 
 require('./bootstrap');
 
+//import Vuetify from 'vuetify';
+//Vue.use(Vuetify);
+
 window.Vue = require('vue');
 
+//import Vue from 'vue';
+//import ElementUI from 'element-ui';
+//import 'element-ui/lib/theme-chalk/index.css';
+
+//Vue.use(ElementUI);
+//Vue.component('app', require('./components/App.vue').default);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,6 +30,7 @@ window.Vue = require('vue');
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('duration', require('./components/Duration.vue').default);
+Vue.component('event-selector', require('./components/EventSelector.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,4 +40,16 @@ Vue.component('duration', require('./components/Duration.vue').default);
 
 const app = new Vue({
     el: '#app',
+    data: {
+        showModal: false,
+        eventId: null,
+    },
+    methods: {
+        set_event: function(event)
+        {
+            this.showModal = !this.showModal;
+            this.eventId = $(event.target).attr('event-id');
+
+        },
+    }
 });

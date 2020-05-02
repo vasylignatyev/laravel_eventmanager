@@ -5,34 +5,39 @@
 <div class="container">
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
-            <table class="table table-bordered">
+            <table>
                 <thead>
                     <tr>
-                        <th>{{ __('Title') }}</th>
-                        <th>{{ __('Duration') }}</th>
+                        <th>{{ __('Start Date') }}</th>
+                        <th>{{ __('Event Title') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($events as $row)
+                @foreach($schedule as $row)
                     <tr>
                         <td>
-                            <a class="pr-3" href="/event/{{$row->id}}">{{$row->title}}</a>
+                            <a class="pr-3" href="/schedule/{{$row->id}}">{{$row->start_date}}</a>
                         </td>
-                        <td>{{durationToStr($row->duration)}}</td>
+                        <td>
+                            <a class="pr-3" href="/event/{{$row->event->id}}"> {{$row->event->title}}</a>
+
+                        </td>
                     <tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+{{--
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
-            {{ $events->links() }}
+            {{ $schedule->links() }}
         </div>
     </div>
+--}}
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
-            <a href="/event/create" class="btn btn-primary">{{ __('Add Event') }}</a>
+            <a href="/schedule/create" class="btn btn-primary">{{ __('Add Schedule') }}</a>
         </div>
 
     </div>

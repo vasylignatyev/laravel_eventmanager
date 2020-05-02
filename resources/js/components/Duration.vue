@@ -35,7 +35,6 @@
                 <tbody>
                     <tr v-for="row in durationModel">
                         <td v-for="val in row">
-                            <!-- input v-if="!val.checked" type="hidden" :value="val.value" :id="val.id" name="duration[]" :index="val.id" -->
                             <input type="checkbox" :value="val.value" :id="val.id" name="duration[]" v-model="val.checked" :disabled="val.disabled"/>
                         </td>
                         <td v-if="!disabled"><span class="glyphicon glyphicon-trash" aria-hidden="true" @click="delDay"></span></td>
@@ -66,7 +65,7 @@
         computed: {
             durationModel() {
                 const disabled = this.dis ? true : null;
-                var idx = 0;
+                let idx = 0;
                 return this.durationArr.map(curr => {
                     return curr.map((row) => {
                         const checked = row === "1";
@@ -84,10 +83,14 @@
         },
         methods: {
             getDurationArr: function () {
-                return this.duration.match(/\d{24}/g).reduce((accum, cur) => {
-                    accum.push(cur.split(""));
-                    return accum;
-                }, []);
+                if(this.duration) {
+                    return this.duration.match(/\d{24}/g).reduce((accum, cur) => {
+                        accum.push(cur.split(""));
+                        return accum;
+                    }, []);
+                } else {
+                    return [];
+                }
             },
             addDay(event) {
                 if (this.durationModel.length > 0) {

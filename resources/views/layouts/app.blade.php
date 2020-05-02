@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/set_event.js') }}" defer></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/popup.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -73,12 +75,14 @@
         </nav>
 
         <main class="py-4">
+            @include('inc.messages')
             @yield('content')
         </main>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            CKEDITOR.replace("full_desc");
+            const full_desc = document.getElementById("full_desc");
+            full_desc && CKEDITOR.replace("full_desc");
         });
     </script>
 </body>
