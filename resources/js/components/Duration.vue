@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
         <div class="col-md-12">
             <table class="table">
                 <thead>

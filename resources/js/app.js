@@ -30,7 +30,10 @@ window.Vue = require('vue');
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('duration', require('./components/Duration.vue').default);
-Vue.component('event-selector', require('./components/EventSelector.vue').default);
+Vue.component('event-selector', require('./components/event/EventSelector.vue').default);
+Vue.component('trainer-edit', require('./components/trainer/Edit.vue').default);
+Vue.component('schedule-edit', require('./components/schedule/Edit').default);
+Vue.component('schedule-create', require('./components/schedule/Create').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -43,13 +46,19 @@ const app = new Vue({
     data: {
         showModal: false,
         eventId: null,
+        current: null,
     },
     methods: {
-        set_event: function(event)
+        set_event(id)
         {
-            this.showModal = !this.showModal;
-            this.eventId = $(event.target).attr('event-id');
-
+            this.eventId = id;
         },
-    }
+        log(message)
+        {
+            console.log('LOG', message);
+        },
+        ev_change(event) {
+            console.log("ev_change", event);
+        },
+    },
 });

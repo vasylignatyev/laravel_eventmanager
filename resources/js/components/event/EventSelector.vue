@@ -12,8 +12,8 @@
 
                     <div class="modal-body">
                         <slot name="body">
-                            <select id="event_select" v-model="this.selected">
-                                <option v-for="event in events" :value="event.id">{{event.title}}</option>
+                            <select id="event_select" v-model="selectModel" @change="chang">
+                                <option v-for="event in events" :value="event">{{event.title}}</option>
                             </select>
                         </slot>
                     </div>
@@ -35,30 +35,42 @@
     export default {
         props: [
             'eventId',
-            'set_event',
+            'selectedEvent',
         ],
-        data: function() {
+        data() {
             return {
-                events: [],
-                selected: 17,
+                events: null,
+                selectModel: null,
+                currentEventId: null,
             }
         },
         mounted() {
-            axios.get('/event')
+            axios.get('/event/list')
                 .then((response) => {
-                    this.events = (response.data && response.data.data) ? response.data.data : [];
-                    console.log(this['event-id']);
-                    this.selected = this.eventId;
-                });
-            console.log("Event Selector mounted");
+                    const events = (response.data) ? response.data : [];
+                    return(events);
+                })
+                .then((ev => {
+                    this.events = ev;
+                    this.selectModel = ev.find( ev => ev.id == this.eventId );
+                }));
+            this.currentEventId = parseInt(this.eventId);
+            this.$parent.eventId = this.currentEventId;
         },
         computed: {
         },
         methods: {
             test (event) {
+                const eventSelect = this.$el.querySelector("#event_select");
+                const current = $(this.$parent.current);
+                current.text(this.selectModel.title).attr('event-id', this.selectModel.id)
                 this.$emit('close');
-                console.log(this.$el.querySelector("#event_select"));
             },
+            chang (event) {
+                this.currentEventId = this.selectModel.id;
+                this.$parent.eventId = this.currentEventId;
+                console.log("Changed: ", event.target, this.selectModel.id);
+            }
         },
     }
 </script>

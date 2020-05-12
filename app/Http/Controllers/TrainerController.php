@@ -63,10 +63,7 @@ class TrainerController extends Controller
      */
     public function show($id)
     {
-        //$trainer = Trainer::with('schedule')->where('id', '=', $id)->first();
         $trainer = Trainer::with('schedule')->where('id', '=', $id)->with('schedule.event')->first();
-        //$trainer = $trainer->schedule->first()->event;
-        //dd($trainer->schedule);
         return view('trainers.show', compact('trainer'));
     }
 
@@ -79,6 +76,7 @@ class TrainerController extends Controller
     public function edit($id)
     {
         $trainer = Trainer::with('schedule')->where('id', '=', $id)->with('schedule.event')->first();
+        //dd(json_encode($trainer->attributesToArray()));
         return view('trainers.edit', compact('trainer'));
     }
 
@@ -95,6 +93,7 @@ class TrainerController extends Controller
             'name' => 'required|max:255',
             'second_name' => 'required|max:255',
             'last_name' => '',
+            'description' => 'max:1024',
             'position' => '',
             'email' => 'required|max:255',
         ]);
@@ -102,19 +101,45 @@ class TrainerController extends Controller
         $trainer->second_name = $validatedData['second_name'];
         $trainer->last_name = $validatedData['last_name'];
         $trainer->position = $validatedData['position'];
+        $trainer->description = $validatedData['description'];
         $trainer->email = $validatedData['email'];
         $trainer->save();
         return redirect("/trainer")->with('success', 'Trainer Updated');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Trainer $trainer
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Trainer $trainer)
     {
-        //
+        $trainer->delete();
+        return redirect("/trainer")->with('success', 'Trainer Deleted');
+    }
+    public function schedule($id)
+    {
+        $trainer = Trainer::with('schedule')->where('id', '=', $id)->first();
+        return view('trainers.schedule')->with(compact('trainer'));
+    }
+
+    /**
+     * @param Request $request
+     * @param Trainer $trainer
+     */
+    public function createSchedule(Request $request, Trainer $trainer)
+    {
+        return view('trainers.schedule.create')->with(compact('trainer'));
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Trainer $trainer
+     */
+    public function updateSchedule(Request $request, Trainer $trainer)
+    {
+        return view('trainers.schedule')->with(compact('trainer'));
+
     }
 }

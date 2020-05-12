@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="container">
+    <h1>Event List</H1>
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <table class="table table-bordered">
@@ -10,6 +11,7 @@
                     <tr>
                         <th>{{ __('Title') }}</th>
                         <th>{{ __('Duration') }}</th>
+                        <th>{{ __('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +21,11 @@
                             <a class="pr-3" href="/event/{{$row->id}}">{{$row->title}}</a>
                         </td>
                         <td>{{durationToStr($row->duration)}}</td>
+                        <td>
+                            <a href="/schedule/event/{{$row->id}}" class="glyphicon glyphicon-calendar"></a>
+                            <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-edit"></a>
+                            <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-trash"></a>
+                        </td>
                     <tr>
                 @endforeach
                 </tbody>

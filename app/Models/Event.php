@@ -17,4 +17,8 @@ class Event extends Model
     public function schedules() {
         return $this->hasMany(Schedule::class);
     }
+/*    public function getDurationAttribute($value)
+    {
+        return bin2hex($this->attributes['duration']);
+    }*/
 }

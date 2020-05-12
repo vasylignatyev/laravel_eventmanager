@@ -18,7 +18,7 @@
 
         <div class="form-group">
             {{Form::label('short_desc', __('Short Description'))}}
-            {{Form::textarea('short_desc', $event->short_desc, ['class' => 'form-control', 'placeholder' => _('Short Description')])}}
+            {{Form::textarea('short_desc', $event->short_desc, ['class' => 'cke_contents cke_reset form-control', 'placeholder' => _('Short Description')])}}
         </div>
 
         <div class="form-group">

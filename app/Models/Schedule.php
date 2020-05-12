@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    protected $primaryKey = 'id';
-    protected $fillable = [];
+    protected $fillable = ['event_id', 'start_date'];
 
     public function tickets() {
         return $this->hasMany(Ticket::class);

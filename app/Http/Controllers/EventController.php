@@ -27,13 +27,14 @@ class EventController extends Controller
     public function index()
     {
         $events = DB::table('events')->select(DB::raw(self::ROW))->paginate(10);
-        return json_encode($events);
+        return view('events.index', compact('events'));
     }
 
     public function list()
     {
         $events = DB::table('events')->select(DB::raw(self::ROW))->get();
-        dd($events);
+        //dd($events);
+        return json_encode($events);
     }
 
     /**

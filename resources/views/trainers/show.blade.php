@@ -19,6 +19,12 @@
             </div>
         </div>
         <div class="pt-2 pb-2">
+            <h4>{{__('Description')}}</h4>
+            <div>
+                {{$trainer->description}}
+            </div>
+        </div>
+        <div class="pt-2 pb-2">
             <h4>{{__('Schedule')}}</h4>
             <table v-if="{{count($trainer->schedule)}} > 0" class="table">
                 <thead>
