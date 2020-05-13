@@ -24,7 +24,6 @@
                         <td>
                             <a href="/schedule/event/{{$row->id}}" class="glyphicon glyphicon-calendar"></a>
                             <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-edit"></a>
-                            <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-trash"></a>
                         </td>
                     <tr>
                 @endforeach

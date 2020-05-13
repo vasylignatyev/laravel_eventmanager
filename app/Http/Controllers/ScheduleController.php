@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\Trainer;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,13 +43,12 @@ class ScheduleController extends Controller
         $validatedData = $request->validate([
             'event_id' => 'required|integer',
             'start_date' => 'required',
-
         ]);
         $event = Event::findOrFail($validatedData['event_id']);
         $event->schedules()->create([
                 'start_date' => $validatedData['start_date'],
         ]);
-        return redirect("/schedule")->with('success', 'Shedule Created');
+        return redirect("/schedule")->with('success', 'Schedule Created');
     }
 
     /**
@@ -59,7 +59,7 @@ class ScheduleController extends Controller
      */
     public function show($id)
     {
-        $schedule = Schedule::find($id)->with('event')->first();
+        $schedule = Schedule::findOrFail($id)->with('event')->first();
         return view('schedule.show', compact('schedule'));
     }
 
@@ -81,8 +81,16 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Schedule $schedule)
     {
+        $validatedData = $request->validate([
+            'event_id' => 'required|integer',
+            'start_date' => 'required',
+        ]);
+        $schedule->save([
+            'start_date' => $validatedData['start_date'],
+        ]);
+        return redirect("/schedule")->with('success', 'Schedule Created');
 
     }
 

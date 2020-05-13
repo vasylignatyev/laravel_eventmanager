@@ -24,16 +24,6 @@
                         <td>
                             <span class="d-inline">
                                 <a href="/schedule/{{$row->id}}" class="glyphicon glyphicon-edit"></a>
-                                {!!Form::open([
-                                    'action' => [
-                                        'ScheduleController@destroy',
-                                        $row->id,
-                                        ],
-                                    'method' => 'DELETE',
-                                    'class'=>"form-inline d-inline"
-                                ])!!}
-                                    <a href="#" class="glyphicon glyphicon-trash" onclick="console.log($(this).parent('form').submit())"></a>
-                                {{ Form::close() }}
                             </span>
                         </td>
                     <tr>

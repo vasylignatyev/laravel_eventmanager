@@ -2109,6 +2109,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
 //
 //
 //
@@ -2132,6 +2142,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       newSchedule: true,
       eventList: [],
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       fields: {},
       errors: {},
       success: false,
@@ -2145,7 +2156,6 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/event/list").then(function (result) {
       _this.eventList = result.data;
     });
-    console.log("mounted");
 
     if (this.schedule) {
       this.newSchedule = false;
@@ -2160,36 +2170,80 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (this.loaded) {
-        console.log(this.fields);
         this.loaded = false;
         this.success = false;
         this.errors = {};
+        var url = null;
+        var method = "POST";
 
         if (this.newSchedule) {
-          axios.post('/schedule', this.fields).then(function (response) {
-            _this2.loaded = true;
-            _this2.success = true;
-          })["catch"](function (error) {
-            _this2.loaded = true;
-
-            if (error.response.status === 422) {
-              _this2.errors = error.response.data.errors || {};
-            }
-          });
+          url = '/schedule';
         } else {
-          axios.update('/schedule/' + this.eventId, this.fields).then(function (response) {
-            _this2.loaded = true;
-            _this2.success = true;
-          })["catch"](function (error) {
-            _this2.loaded = true;
-
-            if (error.response.status === 422) {
-              _this2.errors = error.response.data.errors || {};
-            }
-          });
+          method = 'PUT';
+          url = '/schedule/' + this.scheduleModel.id;
         }
+
+        this.fetch(url, this.fields, method).then(function (date) {
+          _this2.success = true;
+        })["catch"](function (error) {
+          if (error.response && error.response.status === 422) {
+            _this2.errors = error.response.data.errors || {};
+          }
+        })["finally"](function () {
+          _this2.loaded = true;
+        });
       }
-    }
+    },
+    del: function del(event) {
+      event.preventDefault();
+
+      if (this.schedule) {
+        console.log("Before");
+        this.fetch('/schedule/' + this.scheduleModel.id, {}, "DELETE");
+      }
+    },
+    fetch: function (_fetch) {
+      function fetch(_x, _x2) {
+        return _fetch.apply(this, arguments);
+      }
+
+      fetch.toString = function () {
+        return _fetch.toString();
+      };
+
+      return fetch;
+    }(function (url, data) {
+      var _this3 = this;
+
+      var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "POST";
+      var options = {
+        method: method,
+        //credentials: "same-origin",
+        body: JSON.stringify(_objectSpread({}, data, {
+          _token: this.csrf
+        })),
+        //mode: 'no-cors',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRF-TOKEN": this.csrf
+        }
+      };
+      return fetch(url, options).then(function (responce) {
+        if (responce.redirected) {
+          window.location.href = responce.url;
+        }
+
+        return responce;
+      })["catch"](function (error) {
+        console.log('catch: ', error);
+
+        if (error.response.status === 422) {
+          _this3.errors = error.response.data.errors || {};
+        }
+      });
+    })
   }
 });
 
@@ -38011,104 +38065,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      attrs: { enctype: "multipart/form-data" },
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.submit($event)
+  return _c("div", [
+    _c(
+      "form",
+      {
+        attrs: { enctype: "multipart/form-data" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submit($event)
+          }
         }
-      }
-    },
-    [
-      _c("div", { staticClass: "form-group" }, [
-        _c(
-          "label",
-          { staticClass: "col-form-label", attrs: { for: "event" } },
-          [_vm._v("Event")]
-        ),
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            { staticClass: "col-form-label", attrs: { for: "event" } },
+            [_vm._v("Event")]
+          ),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fields.event_id,
+                  expression: "fields.event_id"
+                }
+              ],
+              staticClass: "custom-select",
+              attrs: { type: "event", required: "" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.fields,
+                    "event_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            _vm._l(_vm.eventList, function(option) {
+              return _c("option", { domProps: { value: option.id } }, [
+                _vm._v(_vm._s(option.title))
+              ])
+            }),
+            0
+          )
+        ]),
         _vm._v(" "),
-        _c(
-          "select",
-          {
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            { staticClass: "col-form-label", attrs: { for: "start_date" } },
+            [_vm._v("Start Date")]
+          ),
+          _vm._v(" "),
+          _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.fields.event_id,
-                expression: "fields.event_id"
+                value: _vm.fields.start_date,
+                expression: "fields.start_date"
               }
             ],
-            staticClass: "custom-select",
-            attrs: { type: "event", required: "" },
+            attrs: { type: "date", required: "" },
+            domProps: { value: _vm.fields.start_date },
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.fields,
-                  "event_id",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.fields, "start_date", $event.target.value)
               }
             }
-          },
-          _vm._l(_vm.eventList, function(option) {
-            return _c("option", { domProps: { value: option.id } }, [
-              _vm._v(_vm._s(option.title))
-            ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c(
-          "label",
-          { staticClass: "col-form-label", attrs: { for: "start_date" } },
-          [_vm._v("Start Date")]
-        ),
+          })
+        ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.fields.start_date,
-              expression: "fields.start_date"
-            }
-          ],
-          attrs: { type: "date", required: "" },
-          domProps: { value: _vm.fields.start_date },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.fields, "start_date", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "btn btn-primary",
-        attrs: { type: "submit", value: "Save" }
-      }),
-      _vm._v(" "),
-      _c("hr")
-    ]
-  )
+        _c("hr"),
+        _vm._v(" "),
+        _c("div", { attrs: { cclass: "btn-block" } }, [
+          _c("input", {
+            staticClass: "btn btn-large btn-lg btn-primary",
+            attrs: { type: "submit", value: "Save" }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "btn btn-lg btn-danger",
+            attrs: { type: "button", value: "Delete" },
+            on: { click: _vm.del }
+          })
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

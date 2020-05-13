@@ -30,8 +30,21 @@
             <h4>Duration</h4>
             <duration :duration="{{json_encode($event->duration)}}" :disabled="false"/>
         </div>
-        {{Form::submit(__('Save'))}}
-        {{ Form::close() }}
+        <hr>
+        <div class="btn-group" role="group">
+            {{Form::submit(__('Save'), ['class' => 'btn btn-primary'])}}
+            {{ Form::close() }}
+
+            {!!Form::open([
+                'action' => [
+                    'EventController@destroy',
+                    $event->id,
+                    ],
+                'method' => 'delete',
+            ]) !!}
+            {{Form::submit(__('Delelete'), ['class' => 'btn btn-danger'])}}
+            {{ Form::close() }}
+        </div>
     </div>
 @endsection
 `
