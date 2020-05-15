@@ -13,17 +13,23 @@
         ]) !!}
         <div class="form-group">
             {{Form::label('title', _('Title'))}}
-            {{Form::text('title', $event->title, ['class' => 'form-control', 'placeholder' => __('Title')])}}
+            {{Form::text('title', $event->title, ['class' => 'form-control-lg input-lg', 'placeholder' => __('Title')])}}
         </div>
 
         <div class="form-group">
             {{Form::label('short_desc', __('Short Description'))}}
-            {{Form::textarea('short_desc', $event->short_desc, ['class' => 'cke_contents cke_reset form-control', 'placeholder' => _('Short Description')])}}
+            {{Form::textarea('short_desc', $event->short_desc,
+                [
+                    'class' => 'form-control-lg',
+                    'placeholder' => _('Short Description'),
+//                    'rows' => 5,
+                ])
+            }}
         </div>
 
         <div class="form-group">
             {{Form::label('full_desc', __('Full Description'))}}
-            {{Form::textarea('full_desc', $event->full_desc, ['class' => 'form-control', 'placeholder' => _('Full Description')])}}
+            {{Form::textarea('full_desc', $event->full_desc, ['class' => 'form-control-lg input-lg', 'placeholder' => _('Full Description')])}}
         </div>
 
         <div class="pt-2 pb-4">
@@ -31,8 +37,8 @@
             <duration :duration="{{json_encode($event->duration)}}" :disabled="false"/>
         </div>
         <hr>
-        <div class="btn-group" role="group">
-            {{Form::submit(__('Save'), ['class' => 'btn btn-primary'])}}
+        <div class="btn-group btn-group-lg">
+            {{Form::submit(__('Save'), ['class' => 'btn btn-lg btn-primary  btn-block p-3'])}}
             {{ Form::close() }}
 
             {!!Form::open([
@@ -42,7 +48,7 @@
                     ],
                 'method' => 'delete',
             ]) !!}
-            {{Form::submit(__('Delelete'), ['class' => 'btn btn-danger'])}}
+            {{Form::submit(__('Delete'), ['class' => 'btn btn-lg btn-danger btn-block p-3'])}}
             {{ Form::close() }}
         </div>
     </div>

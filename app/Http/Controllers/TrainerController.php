@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\Schedule;
 use App\Models\Trainer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,9 +63,12 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Trainer $trainer)
+    //public function show($id)
     {
-        $trainer = Trainer::with('schedule')->where('id', '=', $id)->with('schedule.event')->first();
+        //dd($trainer->schedules);
+        //$trainer = Trainer::with('schedules')->where('id', '=', $id)->with('schedules.event')->first();
+        //dd($trainer);
         return view('trainers.show', compact('trainer'));
     }
 
@@ -73,9 +78,9 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Trainer $trainer)
     {
-        $trainer = Trainer::with('schedule')->where('id', '=', $id)->with('schedule.event')->first();
+        //$trainer = Trainer::with('schedules')->where('id', '=', $id)->with('schedule.event')->first();
         //dd(json_encode($trainer->attributesToArray()));
         return view('trainers.edit', compact('trainer'));
     }
@@ -103,7 +108,7 @@ class TrainerController extends Controller
         $trainer->position = $validatedData['position'];
         $trainer->description = $validatedData['description'];
         $trainer->email = $validatedData['email'];
-        $trainer->save();
+        $trainer->update();
         return redirect("/trainer")->with('success', 'Trainer Updated');
     }
 
@@ -117,10 +122,20 @@ class TrainerController extends Controller
         $trainer->delete();
         return redirect("/trainer")->with('success', 'Trainer Deleted');
     }
-    public function schedule($id)
+    public function scheduleIndex(Trainer $trainer, $Scedil)
     {
-        $trainer = Trainer::with('schedule')->where('id', '=', $id)->first();
-        return view('trainers.schedule')->with(compact('trainer'));
+        //$trainer = Trainer::with('schedule')->where('id', '=', $id)->first();
+        return view('trainers.schedules.index')->with(compact('trainer'));
+    }
+
+    public function scheduleShow(Schedule $schedule)
+    {
+        return view('trainers.schedules.show')->with(compact('schedule'));
+    }
+
+    public function scheduleEdit(Schedule $schedule)
+    {
+        return view('trainers.schedules.edit')->with(compact('schedule'));
     }
 
     /**
@@ -141,5 +156,11 @@ class TrainerController extends Controller
     {
         return view('trainers.schedule')->with(compact('trainer'));
 
+    }
+
+    public function eventIndex(Trainer $trainer)
+    {
+        dd($trainer);
+       return view('trainers.events.index')->with(compact('trainer'));
     }
 }

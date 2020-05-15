@@ -14,11 +14,17 @@ class Event extends Model
     private $short_desc;
     private $full_desc;
 
+    public function getDurationAttribute()
+    {
+        return bin2hex($this->attributes['duration']);
+    }
+
     public function schedules() {
         return $this->hasMany(Schedule::class);
     }
-/*    public function getDurationAttribute($value)
-    {
-        return bin2hex($this->attributes['duration']);
-    }*/
+
+    public function __toString() {
+        return( json_encode($this->attributesToArray()) );
+        //return( "Hello, World" );
+    }
 }

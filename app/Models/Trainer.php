@@ -32,12 +32,14 @@ class Trainer extends Model
         $this->attributes['email'] = strlen($value) > 0 ? $value : null;
     }
 
-    public function schedule()
+    public function schedules()
     {
-        return $this->belongsToMany('\App\Models\Schedule');
+        return $this->belongsToMany('\App\Models\Schedule')
+            ->using('\App\Models\ScheduleTrainer')
+            ->withPivot(['role']);
     }
 
     public function __toString() {
-        return( json_encode($this->attributesToArray()) );
+        return(json_encode($this->attributesToArray()));
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <a href="/event" class="btn btn-primary">{{__('Back')}}</a>
+        <a href="/event" class="btn btn-lg btn-primary">{{__('Back')}}</a>
         <h1>{{$event->title}}</h1>
         <div class="pt-2 pb-4">
             <h4>{{__('Short Description')}}</h4>
@@ -22,12 +22,8 @@
         <div><span class="pr-2">{{__('Created at')}}</span>{{$event->created_at}}</div>
         <hr>
         @if(!Auth::guest())
-            <div class="d-flex">
-                <a href="/event/{{$event->id}}/edit" class="btn btn-primary">Edit</a>
-                {!!Form::open(['action' => ['EventController@destroy', $event->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
-                    {{Form::hidden('_method', 'DELETE')}}
-                    {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-                {!!Form::close()!!}
+            <div>
+                <a href="/event/{{$event->id}}/edit" class="btn btn-lg btn-primary">Edit</a>
             </div>
         @endif
     </div>

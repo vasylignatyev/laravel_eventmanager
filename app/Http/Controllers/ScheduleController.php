@@ -19,7 +19,7 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedule = Schedule::with('event')->orderByDesc('start_date')->paginate();
-        return view('schedule.index', compact('schedule'));
+        return view('schedules.index', compact('schedule'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        return view('schedule.create');
+        return view('schedules.create');
     }
 
     /**
@@ -57,10 +57,9 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Schedule $schedule)
     {
-        $schedule = Schedule::findOrFail($id)->with('event')->first();
-        return view('schedule.show', compact('schedule'));
+        return view('schedules.show', compact('schedule'));
     }
 
     /**
@@ -71,7 +70,7 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
-        return view('schedule.edit', compact('schedule'));
+        return view('schedules.edit', compact('schedule'));
     }
 
     /**
@@ -86,30 +85,35 @@ class ScheduleController extends Controller
         $validatedData = $request->validate([
             'event_id' => 'required|integer',
             'start_date' => 'required',
+            'address' => '',
+            //'latitude' => 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/',
+            'latitude' => '',
+            //'longitude' => 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
+            'longitude' => '',
         ]);
-        $schedule->save([
+        $schedule->update(
+            $validatedData
+/*            [
+            'event_id' => $validatedData['event_id'],
             'start_date' => $validatedData['start_date'],
-        ]);
+            'address' => $validatedData['address'],
+            ]*/
+        );
         return redirect("/schedule")->with('success', 'Schedule Created');
-
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
         return redirect('/schedule')->with('success', _('Schedule Deleted'));
     }
+
     public function eventIndex(Event $event) {
         $schedule = $event->schedules()->get();
-        return view('schedule.index', compact('schedule', 'event'));
+        return view('schedules.index', compact('schedule', 'event'));
     }
+
     public function eventCreate(Event $event) {
-        return view('schedule.create', compact('event'));
+        return view('schedules.create', compact('event'));
     }
 }

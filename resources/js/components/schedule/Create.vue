@@ -3,16 +3,28 @@
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="event" class="col-form-label">Event</label>
-                <select type="event" class="custom-select" v-model="fields.event_id" required>
+                <select name="event" class="custom-select" v-model="fields.event_id" required>
                     <option v-for="option in eventList" :value="option.id">{{option.title}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="start_date" class="col-form-label">Start Date</label>
-                <input type="date" required v-model="fields.start_date">
+                <input type="date" v-model="fields.start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-form-label">Address</label>
+                <textarea v-model="fields.address"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="latitude" class="col-form-label">Latitude</label>
+                <input type="decimal" v-model="fields.latitude">
+            </div>
+            <div class="form-group">
+                <label for="longitude" class="col-form-label">Longitude</label>
+                <input type="decimal" v-model="fields.longitude">
             </div>
             <hr>
-            <div cclass="btn-block">
+            <div class="btn-block">
                 <input type="submit" class="btn btn-large btn-lg btn-primary" value="Save">
                 <input type="button" @click="del" class="btn btn-lg btn-danger" value="Delete">
             </div>
@@ -44,8 +56,7 @@
             if(this.schedule) {
                 this.newSchedule = false;
                 this.scheduleModel = JSON.parse(this.schedule);
-                this.fields.event_id = this.scheduleModel.event_id;
-                this.fields.start_date = this.scheduleModel.start_date;
+                this.fields = this.scheduleModel;
             }
         },
         computed: {

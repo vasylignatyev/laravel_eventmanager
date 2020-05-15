@@ -22,8 +22,8 @@
                         </td>
                         <td>{{durationToStr($row->duration)}}</td>
                         <td>
-                            <a href="/schedule/event/{{$row->id}}" class="glyphicon glyphicon-calendar"></a>
-                            <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-edit"></a>
+                            <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-edit pr-2" title="Edit" ></a>
+                            <a href="/schedule/event/{{$row->id}}" class="glyphicon glyphicon-calendar pr-2" title="Schedule"></a>
                         </td>
                     <tr>
                 @endforeach

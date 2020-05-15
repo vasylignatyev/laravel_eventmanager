@@ -41,7 +41,7 @@
             {{ $trainers->links() }}
         </div>
         <div class="col-12">
-            <a href="/trainer/create" class="btn btn-lg btn-primary">{{ __('Add Trainer') }}</a>
+            <a href="/trainer/create" class="btn btn-primary">{{ __('Add Trainer') }}</a>
         </div>
 
     </div>

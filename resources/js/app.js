@@ -31,9 +31,9 @@ window.Vue = require('vue');
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('duration', require('./components/Duration.vue').default);
 Vue.component('event-selector', require('./components/event/EventSelector.vue').default);
-Vue.component('trainer-edit', require('./components/trainer/Edit.vue').default);
-Vue.component('schedule-edit', require('./components/schedule/Edit').default);
-Vue.component('schedule-create', require('./components/schedule/Create').default);
+//Vue.component('trainer', require('./components/trainer/Edit.vue').default);
+Vue.component('schedule', require('./components/schedule/Create').default);
+Vue.component('schedule-trainer', require('./components/SheduleTrainer').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

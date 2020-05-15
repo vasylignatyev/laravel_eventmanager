@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    protected $fillable = ['event_id', 'start_date'];
+    protected $fillable = ['start_date','address','latitude','longitude','event_id','trainer_id'];
 
     public function tickets() {
         return $this->hasMany(Ticket::class);
@@ -16,9 +16,18 @@ class Schedule extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function trainer()
+    public function trainers()
     {
-        return $this->belongsToMany('\App\Mdeles\Trainer');
+        return $this->belongsToMany('\App\Models\Trainer')
+            ->using('\App\Models\ScheduleTrainer')
+            ->withPivot(['role']);
     }
+
+/*    public function schedule_trainer()
+    {
+        return $this->belongsToMany('\App\Models\ScheduleTrainer');
+    }*/
+
+
 
 }

@@ -1,8 +1,8 @@
 `@extends('layouts.app')
 
 @section('content')
-    <h1>Create Trainer</h1>
     <div class="container">
+        <h1>{{_('Create Trainer')}}</h1>
         {!! Form::open([
             'action' =>'TrainerController@store',
             'method' => 'POST'
@@ -104,7 +104,25 @@
             </div>
         </div>
 
-        {!! Form::submit(__('Save')) !!}
+        <div class="form-group row">
+            <label for="description" class="col-md-4 col-form-label text-md-right">{{__('Description')}}</label>
+            <div class="col-md-6">
+                <textarea
+                    name="description"
+                    type="text"
+                    class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                    placeholder="{{__('Description')}}"
+                    autocomplete="description" autofocus
+                >{{old('description') }}</textarea>
+                @if ($errors->has('description'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('description') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
+        {!! Form::submit(__('Save'),['class'=>'btn btn-lg btn-primary']) !!}
         {!! Form::close() !!}
     </div>
 @endsection

@@ -2,40 +2,40 @@
 
 @section('content')
     <div class="container">
-        <a href="/schedule" class="btn btn-primary">{{__('Back')}}</a>
+        <a href="/schedule" class="btn btn-primary btn-lg">{{__('Back')}}</a>
         <div class="pt-2 pb-4">
-            <h4>{{__('Start Date')}}</h4>
+            <h3>{{__('Start Date')}}</h3>
             <div>
                 {{$schedule->start_date}}
             </div>
         </div>
-
+        <div class="pt-2 pb-4">
+            <h3>{{__('Event')}}</h3>
+            <div>
+                {{$schedule->event->title}}
+            </div>
+        </div>
         <div v-if="{{$schedule->address !== null}}" class="pt-2 pb-4">
-            <h4>{{__('Address')}}</h4>
+            <h3>{{__('Address')}}</h3>
             <div>
                 {{$schedule->address}}
             </div>
         </div>
-
         <div class="pt-2 pb-4">
-            <h4>{{__('Geotag')}}</h4>
+            <h3>{{__('Geotag')}}</h3>
             <div><span class="pr-2">Latitude:</span>{{$schedule->latitude}}</div>
             <div><span class="pr-2">Longitude:</span>{{$schedule->longitude}}</div>
         </div>
-
         <div class="pt-2 pb-4">
-            <h4>{{__('Trainer')}}</h4>
-        </div>
+            <h3><a href="/trainer/schedule/{{$schedule->id}}">{{__('Trainers')}}</a></h3>
+            <schedule-trainer :trainers="{{$schedule->trainers}}" :editable="true"/>
 
-        <div class="pt-2 pb-4">
-            <h4>{{__('Event')}}</h4>
         </div>
-
         <hr>
         <small>Created at {{$schedule->created_at}}</small>
         <hr>
         <span class="d-inline">
-            <a href="/schedule/{{$schedule->id}}/edit" class="btn btn-primary">Edit</a>
+            <a href="/schedule/{{$schedule->id}}/edit" class="btn btn-lg btn-primary">Edit</a>
         </span>
 
     </div>
