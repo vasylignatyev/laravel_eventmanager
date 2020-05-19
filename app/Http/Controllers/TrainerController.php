@@ -122,39 +122,42 @@ class TrainerController extends Controller
         $trainer->delete();
         return redirect("/trainer")->with('success', 'Trainer Deleted');
     }
-    public function scheduleIndex(Trainer $trainer, $Scedil)
+    public function scheduleIndex(Trainer $trainer)
     {
-        //$trainer = Trainer::with('schedule')->where('id', '=', $id)->first();
         return view('trainers.schedules.index')->with(compact('trainer'));
     }
 
     public function scheduleShow(Schedule $schedule)
     {
-        return view('trainers.schedules.show')->with(compact('schedule'));
+        $trainerList = Trainer::get();
+        return view('trainers.schedules.show')->with(compact('schedule', 'trainerList'));
     }
 
     public function scheduleEdit(Schedule $schedule)
     {
-        return view('trainers.schedules.edit')->with(compact('schedule'));
+        $trainerList = Trainer::get();
+        return view('trainers.schedules.edit')->with(compact('schedule', 'trainerList'));
     }
 
-    /**
-     * @param Request $request
-     * @param Trainer $trainer
-     */
-    public function createSchedule(Request $request, Trainer $trainer)
+    public function scheduleUpdate(Request $request, Schedule $schedule)
     {
-        return view('trainers.schedule.create')->with(compact('trainer'));
+        $validatedData = $request->validate([
+            'trainers' => 'required|array',
+        ]);
+        $schedule->trainers()->detach();
+        $pivots = [];
+        foreach($validatedData['trainers'] as $trainer) {
+            $pivots[$trainer['trainer_id']] = ['role' => $trainer['role']];
+        }
+        $schedule->trainers()->sync($pivots);
 
+        return response(['status' => 'success']);
     }
 
-    /**
-     * @param Request $request
-     * @param Trainer $trainer
-     */
-    public function updateSchedule(Request $request, Trainer $trainer)
+    public function scheduleCreate(Request $request, Trainer $trainer)
     {
-        return view('trainers.schedule')->with(compact('trainer'));
+        $trainers = json_encode([$trainer]);
+        return view('trainers.schedules.create')->with(compact('trainers'));
 
     }
 

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::put('/set-trainer/{schedule}', 'TrainerController@scheduleUpdate')->name('api.scheduleUpdate');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

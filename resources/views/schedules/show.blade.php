@@ -27,9 +27,26 @@
             <div><span class="pr-2">Longitude:</span>{{$schedule->longitude}}</div>
         </div>
         <div class="pt-2 pb-4">
-            <h3><a href="/trainer/schedule/{{$schedule->id}}">{{__('Trainers')}}</a></h3>
-            <schedule-trainer :trainers="{{$schedule->trainers}}" :editable="true"/>
-
+            <h3>{{__('Trainers')}} (<a href="/trainer/schedule/{{$schedule->id}}">edit</a>)</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($schedule->trainers as $trainer)
+                    <tr>
+                        <td>
+                            <span class="pr-2">{{$trainer->second_name}}</span>
+                            <span>{{$trainer->name}}</span>
+                        </td>
+                        <td>{{$trainer->pivot->role}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <hr>
         <small>Created at {{$schedule->created_at}}</small>

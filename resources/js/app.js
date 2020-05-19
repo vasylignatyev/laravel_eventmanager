@@ -32,7 +32,7 @@ window.Vue = require('vue');
 Vue.component('duration', require('./components/Duration.vue').default);
 Vue.component('event-selector', require('./components/event/EventSelector.vue').default);
 //Vue.component('trainer', require('./components/trainer/Edit.vue').default);
-Vue.component('schedule', require('./components/schedule/Create').default);
+Vue.component('schedule', require('./components/Schedule').default);
 Vue.component('schedule-trainer', require('./components/SheduleTrainer').default);
 
 /**

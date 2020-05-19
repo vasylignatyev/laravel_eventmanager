@@ -43,11 +43,23 @@ class ScheduleController extends Controller
         $validatedData = $request->validate([
             'event_id' => 'required|integer',
             'start_date' => 'required',
+            'trainers' => 'array',
+            'trainers.*' => 'integer',
+            'latitude' => '',
+            'longitude' => '',
         ]);
         $event = Event::findOrFail($validatedData['event_id']);
-        $event->schedules()->create([
+        $schedule = $event->schedules()->create([
                 'start_date' => $validatedData['start_date'],
         ]);
+
+        if(isset($validatedData['trainers'])) {
+            foreach($validatedData['trainers'] as $trainer) {
+                $pivots[$trainer] = ['role' => null];
+            }
+            $schedule->trainers()->sync($pivots);
+        }
+
         return redirect("/schedule")->with('success', 'Schedule Created');
     }
 
