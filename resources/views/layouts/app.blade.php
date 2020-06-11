@@ -35,6 +35,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="pr-4"><a href="/event">{{_('Events')}}</a></li>
+                        <li class="pr-4"><a href="/schedule">{{_('Schedules')}}</a></li>
+                        <li class="pr-4"><a href="/trainer">{{_('Trainers')}}</a></li>
 
                     </ul>
 
@@ -80,8 +83,11 @@
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const full_desc = document.getElementById("full_desc");
-            full_desc && CKEDITOR.replace("full_desc");
+            // const full_desc = document.getElementById("full_desc");
+            // full_desc && CKEDITOR.replace("full_desc", {
+            //     filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
+            //     filebrowserUploadMethod: 'form'
+            // });
         });
     </script>
 </body>

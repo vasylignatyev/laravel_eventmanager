@@ -66,9 +66,6 @@ class TrainerController extends Controller
     public function show(Trainer $trainer)
     //public function show($id)
     {
-        //dd($trainer->schedules);
-        //$trainer = Trainer::with('schedules')->where('id', '=', $id)->with('schedules.event')->first();
-        //dd($trainer);
         return view('trainers.show', compact('trainer'));
     }
 
@@ -80,8 +77,6 @@ class TrainerController extends Controller
      */
     public function edit(Trainer $trainer)
     {
-        //$trainer = Trainer::with('schedules')->where('id', '=', $id)->with('schedule.event')->first();
-        //dd(json_encode($trainer->attributesToArray()));
         return view('trainers.edit', compact('trainer'));
     }
 

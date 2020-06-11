@@ -21,12 +21,14 @@ Auth::routes();
 
 Route::get('/home', 'EventController@index')->name('home');
 
+Route::post('/ckedit/upload', 'CkeditorController@upload')->name('ckeditor.upload');
+
 Route::get('/event/list', 'EventController@list')->name('event.list');
 Route::resource('event', 'EventController');
 
-Route::get('/trainer/schedule',  'TrainerController@scheduleIndex')->name('trainer.schedule.index');
-Route::get('/trainer/schedule/{schedule}',  'TrainerController@scheduleShow')->name('trainer.schedule.show');
-Route::get('/trainer/schedule/{schedule}/edit',  'TrainerController@scheduleEdit')->name('trainer.schedule.edit');
+Route::get('/trainer/schedule', 'TrainerController@scheduleIndex')->name('trainer.schedule.index');
+Route::get('/trainer/schedule/{schedule}', 'TrainerController@scheduleShow')->name('trainer.schedule.show');
+Route::get('/trainer/schedule/{schedule}/edit', 'TrainerController@scheduleEdit')->name('trainer.schedule.edit');
 Route::get('/trainer/{trainer}/schedule/create', 'TrainerController@scheduleCreate')->name('trainer.schedule.create');
 
 Route::put('/trainer/schedule/{schedule}',  'TrainerController@scheduleUpdate')->name('trainer.schedule.update');
@@ -38,3 +40,8 @@ Route::resource('trainer', 'TrainerController');
 Route::get('/schedule/event/{event}', 'ScheduleController@eventIndex')->name('schedule.event.index');
 Route::get('/schedule/event/{event}/create', 'ScheduleController@eventCreate')->name('schedule.event.create');
 Route::resource('schedule', 'ScheduleController');
+
+Route::resource('donor', 'DonorController');
+Route::get('donor/{donor}/projects', 'DonorController@projectsIndex')->name('donor.projects.index');
+Route::resource('project', 'ProjectController');
+

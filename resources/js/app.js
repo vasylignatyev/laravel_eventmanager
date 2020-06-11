@@ -44,21 +44,14 @@ Vue.component('schedule-trainer', require('./components/SheduleTrainer').default
 const app = new Vue({
     el: '#app',
     data: {
-        showModal: false,
-        eventId: null,
-        current: null,
     },
     methods: {
-        set_event(id)
-        {
-            this.eventId = id;
-        },
-        log(message)
-        {
-            console.log('LOG', message);
-        },
-        ev_change(event) {
-            console.log("ev_change", event);
-        },
+    },
+    mounted() {
+        const full_desc = document.getElementById("full_desc");
+        full_desc && CKEDITOR.replace("full_desc", {
+            filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
     },
 });

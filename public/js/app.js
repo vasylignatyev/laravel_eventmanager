@@ -50670,21 +50670,14 @@ Vue.component('schedule-trainer', __webpack_require__(/*! ./components/SheduleTr
 
 var app = new Vue({
   el: '#app',
-  data: {
-    showModal: false,
-    eventId: null,
-    current: null
-  },
-  methods: {
-    set_event: function set_event(id) {
-      this.eventId = id;
-    },
-    log: function log(message) {
-      console.log('LOG', message);
-    },
-    ev_change: function ev_change(event) {
-      console.log("ev_change", event);
-    }
+  data: {},
+  methods: {},
+  mounted: function mounted() {
+    var full_desc = document.getElementById("full_desc");
+    full_desc && CKEDITOR.replace("full_desc", {
+      filebrowserUploadUrl: "{{route('ckeditor.upload', ['_token' => csrf_token() ])}}",
+      filebrowserUploadMethod: 'form'
+    });
   }
 });
 
