@@ -39,6 +39,9 @@ Route::resource('trainer', 'TrainerController');
 
 Route::get('/schedule/event/{event}', 'ScheduleController@eventIndex')->name('schedule.event.index');
 Route::get('/schedule/event/{event}/create', 'ScheduleController@eventCreate')->name('schedule.event.create');
+Route::get('/schedule/{schedule}/trainer', 'ScheduleController@trainerIndex')->name('schedule.triner.index');
+Route::delete('/schedule/{schedule}/trainer', 'ScheduleController@trainerDelete')->name('schedule.triner.delete');
+Route::get('/schedule/{schedule}/trainer/create', 'ScheduleController@trainerCreate')->name('schedule.triner.create');
 Route::resource('schedule', 'ScheduleController');
 
 Route::resource('donor', 'DonorController');

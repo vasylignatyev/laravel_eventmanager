@@ -25,7 +25,7 @@ class DonorController extends Controller
      */
     public function create()
     {
-        dd("Hello");
+        return view('donors.create');
     }
 
     /**
@@ -36,7 +36,22 @@ class DonorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|unique:donors|max:127',
+            'short_desc' => 'required',
+            'full_desc' => '',
+            'country' => 'required|max:255',
+        ]);
+
+        $donor = new Donor;
+        $donor->title = $validatedData['title'];
+        $donor->short_desc = $validatedData['short_desc'];
+        if(isset($validatedData['full_desc'])) {
+            $donor->full_desc = $validatedData['full_desc'];
+        }
+        $donor->country = $validatedData['country'];
+        $donor->save();
+        return redirect("/donor")->with('success', 'Donor Created');
     }
 
     /**
@@ -75,9 +90,11 @@ class DonorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id dd($donor);
-    public function destroy($id)
+     */
+    public function destroy(Donor $donor)
     {
-        //
+        $donor->delete();
+        return redirect("/donor")->with('success', 'Donor Deleted');
     }
     /**
      * 

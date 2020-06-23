@@ -12,9 +12,9 @@
             'enctype' => 'multipart/form-data'
         ]) !!}
 
-        <div class="form-group">
+        <!--div class="form-group">
             <img src="{{asset('images/cat_1589887194.jpg')}}" alt="LOGO" height="100" max-width="100" />
-        </div>
+        </div-->
 
         <div class="form-group">
             {{Form::label('title', _('Title'))}}
@@ -33,12 +33,12 @@
 
         <div class="form-group">
             {{Form::label('full_desc', __('Full Description'))}}
-            {{Form::textarea('full_desc', $donor->full_desc, ['class' => 'form-control-lg input-lg', 'placeholder' => _('Full Description')])}}
+            {{Form::textarea('full_desc', $donor->full_desc, ['class' => 'form-control-lg input-lg'])}}
         </div>
 
         <div class="form-group">
             {{Form::label('country', __('Country'))}}
-            {{Form::textarea('country', $donor->country, ['class' => 'form-control-lg input-lg', 'placeholder' => _('Full Description')])}}
+            {{Form::textarea('country', $donor->country, ['class' => 'form-control-lg input-lg', 'placeholder' => _('Country')])}}
         </div>
 
         <hr>
@@ -53,7 +53,10 @@
                     ],
                 'method' => 'delete',
             ]) !!}
-            {{Form::submit(__('Delete'), ['class' => 'btn btn-lg btn-danger'])}}
+            {{Form::submit(__('Delete'), [
+                'class' => 'btn btn-lg btn-danger',
+                'onclick' => "return confirm('Are you sure?')",
+            ])}}
             {{ Form::close() }}
             </div>
     </div>

@@ -27,7 +27,7 @@
             <div><span class="pr-2">Longitude:</span>{{$schedule->longitude}}</div>
         </div>
         <div class="pt-2 pb-4">
-            <h3>{{__('Trainers')}} (<a href="/trainer/schedule/{{$schedule->id}}">edit</a>)</h3>
+            <h3>{{__('Trainers')}} (<a href="/schedule/{{$schedule->id}}/trainer">edit</a>)</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -39,8 +39,9 @@
                     @foreach ($schedule->trainers as $trainer)
                     <tr>
                         <td>
-                            <span class="pr-2">{{$trainer->second_name}}</span>
-                            <span>{{$trainer->name}}</span>
+                            <span class="pr-2">{{$trainer->last_name}}</span>
+                            <span class="pr-2">{{$trainer->name}}</span>
+                            <span>{{$trainer->second_name}}</span>
                         </td>
                         <td>{{$trainer->pivot->role}}</td>
                     </tr>

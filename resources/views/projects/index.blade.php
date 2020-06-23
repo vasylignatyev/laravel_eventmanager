@@ -19,16 +19,10 @@
                 <tbody>
                 @foreach($projects as $row)
                     <tr>
-                        <td>
-                            <a class="pr-3" href="/project/{{$row->id}}">{{$row->start_date}}</a>
-                        </td>
-                        <td>
-                            <a class="pr-3" href="/project/{{$row->id}}">{{$row->end_date}}</a>
-                        </td>
-                        <td>
-                            <a class="pr-3" href="/project/{{$row->id}}">{{$row->title}}</a>
-                        </td>
-                        <td><a class="pr-3" href="/project/{{$row->id}}">{{$row->short_desc}}</a></td>
+                        <td>{{$row->start_date}}</td>
+                        <td>{{$row->end_date}}</td>
+                        <td>{{$row->title}}</td>
+                        <td>{{$row->short_desc}}</td>
                         <td>
                             <a href="/project/{{$row->id}}/edit" class="glyphicon glyphicon-edit pr-2" title="Edit" ></a>
                         </td>

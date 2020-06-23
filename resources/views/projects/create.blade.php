@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="container">
-    <h1>{{__('Create Event')}}</h1>
-    <form method="POST" action="{{route('event.store')}}">
+    <h1>{{__('Create Project')}}</h1>
+    <form method="POST" action="{{route('project.store')}}">
         @csrf
         <div class="form-group row">
             <label for="title" class="col-md-4 col-form-label text-md-right">{{__('Title')}}</label>
@@ -63,19 +63,47 @@
         </div>
 
         <div class="form-group row">
-            <label for="duration" class="col-md-4 col-form-label text-md-right">{{__('Duration')}}</label>
-            <duration :disabled="false"/>
-            @if ($errors->has('duration'))
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('duration') }}</strong>
-                </span>
-            @endif
+            <label for="start_date" class="col-md-4 col-form-label text-md-right">{{__('Start Date')}}</label>
+            <div class="col-md-6">
+                <input
+                    id="start_date"
+                    type="date"
+                    class="form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}"
+                    name="start_date"
+                    value="{{ old('start_date') }}"
+                    autocomplete="start_date" autofocus>
+
+                @if ($errors->has('start_date'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('start_date') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="end_date" class="col-md-4 col-form-label text-md-right">{{__('End Date')}}</label>
+            <div class="col-md-6">
+                <input
+                    id="end_date"
+                    type="date"
+                    class="form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}"
+                    name="end_date"
+                    value="{{ old('end_date') }}"
+                    autocomplete="end_date" autofocus>
+
+                @if ($errors->has('end_date'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('end_date') }}</strong>
+                    </span>
+                @endif
+            </div>
         </div>
 
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
                 <button type="submit" class="btn btn-primary">
-                    {{__('Add New')}}
+                    {{__('Create')}}
                 </button>
             </div>
         </div>

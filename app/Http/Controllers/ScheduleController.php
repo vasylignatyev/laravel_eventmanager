@@ -119,13 +119,43 @@ class ScheduleController extends Controller
         $schedule->delete();
         return redirect('/schedule')->with('success', _('Schedule Deleted'));
     }
+    /********************** EVENT SECTION *****************************/
 
-    public function eventIndex(Event $event) {
+    public function eventIndex(Event $event)
+    {
         $schedule = $event->schedules()->get();
         return view('schedules.index', compact('schedule', 'event'));
     }
 
-    public function eventCreate(Event $event) {
+    public function eventCreate(Event $event)
+    {
         return view('schedules.create', compact('event'));
     }
+
+    /********************** EVENT SECTION *****************************/
+
+    public function trainerIndex( Schedule $schedule)
+    {
+        return view('schedules.trainers.index')->with( compact('schedule') );
+
+    }
+
+    public function trainerDelete(Schedule $schedule)
+    {
+        $trainerId = intval($_POST["trainer_id"]);
+        $schedule->trainers()->wherePivot('trainer_id', '=', $trainerId)->detach();
+        return redirect('/schedule/'. $schedule->id .'/trainer' )->with('success', _('Traioner Deleted'));
+    }
+
+    public function trainerCreate(Schedule $schedule)
+    {
+        //dd($schedule);
+        
+        $trainers = Trainer::all()->toArray();
+        dd($trainers);
+
+
+        return view('schedules.trainers.create')->with(compact('schedule', 'trainers'));
+    }
+
 }
