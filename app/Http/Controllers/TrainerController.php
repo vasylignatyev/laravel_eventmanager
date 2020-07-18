@@ -117,6 +117,7 @@ class TrainerController extends Controller
         $trainer->delete();
         return redirect("/trainer")->with('success', 'Trainer Deleted');
     }
+    
     public function scheduleIndex(Trainer $trainer)
     {
         return view('trainers.schedules.index')->with(compact('trainer'));

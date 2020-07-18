@@ -8,6 +8,8 @@ use App\Models\Trainer;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Trainer as TrainerResource;
+use Illuminate\Database\Eloquent\Collection;
 
 class ScheduleController extends Controller
 {
@@ -151,7 +153,7 @@ class ScheduleController extends Controller
     {
         //dd($schedule);
         
-        $trainers = Trainer::all()->toArray();
+        $trainers = TrainerResource::collection(Trainer::all());
         dd($trainers);
 
 
