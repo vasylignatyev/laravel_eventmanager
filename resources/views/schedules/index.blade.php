@@ -9,7 +9,7 @@
                     <tr>
                         <th>{{ __('Start Date') }}</th>
                         <th>{{ __('Event Title') }}</th>
-                        <th>{{ __('Address')}}</th>
+                        <th>{{ __('AddressController')}}</th>
                         <th>{{ __('Longitude')}}</th>
                         <th>{{ __('Latitude')}}</th>
                         <th>{{ __('Action')}}</th>

@@ -16,7 +16,7 @@
             </div>
         </div>
         <div v-if="{{$schedule->address !== null}}" class="pt-2 pb-4">
-            <h3>{{__('Address')}}</h3>
+            <h3>{{__('AddressController')}}</h3>
             <div>
                 {{$schedule->address}}
             </div>

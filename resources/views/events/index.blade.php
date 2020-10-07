@@ -36,11 +36,12 @@
             {{ $events->links() }}
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <a href="/event/create" class="btn btn-primary">{{ __('Add Event') }}</a>
+    @if ( Auth::check() )
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <a href="/event/create" class="btn btn-primary">{{ __('Add Event') }}</a>
+            </div>
         </div>
-
-    </div>
+    @endif
 </div>
 @endsection

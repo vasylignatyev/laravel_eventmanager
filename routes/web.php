@@ -48,3 +48,6 @@ Route::resource('donor', 'DonorController');
 Route::get('donor/{donor}/projects', 'DonorController@projectsIndex')->name('donor.projects.index');
 Route::resource('project', 'ProjectController');
 
+Route::resource('address', 'AddressController');
+Route::resource('company', 'CompanyController');
+
