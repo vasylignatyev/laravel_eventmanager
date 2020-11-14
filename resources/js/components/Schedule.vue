@@ -122,7 +122,7 @@
                         this.errors = error.response.data.errors || {};
                     }
                 });
-            }
+            },
         },
     }
 </script>

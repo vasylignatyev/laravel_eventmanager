@@ -33,7 +33,10 @@ Vue.component('duration', require('./components/Duration.vue').default);
 Vue.component('event-selector', require('./components/event/EventSelector.vue').default);
 //Vue.component('trainer', require('./components/trainer/Edit.vue').default);
 Vue.component('schedule', require('./components/Schedule').default);
-Vue.component('schedule-trainer', require('./components/SheduleTrainer').default);
+Vue.component('even ', require('./components/SheduleTrainer').default);
+Vue.component('edit-donors', require('./components/project/EditDonors').default);
+Vue.component('edit-projects', require('./components/project/EditProjects').default);
+//Vue.component('customer-edit', require('./components/CustomerEdit').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -3,27 +3,31 @@
 @section('content')
 
 <div class="container">
-    <h1>Project List</H1>
+    <h1 class="d-flex justify-content-center">{{__('Donor List')}}</h1>
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>{{ __('Start Date') }}</th>
-                        <th>{{ __('End Date') }}</th>
                         <th>{{ __('Title') }}</th>
                         <th>{{ __('Short Description') }}</th>
+                        <th>{{ __('Country') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($projects as $row)
+                @foreach($subscriptions as $row)
                     <tr>
-                        <td>{{$row->start_date}}</td>
-                        <td>{{$row->end_date}}</td>
                         <td>
-                            <a href="/project/{{$row->id}}/edit" class="pr-2"> {{$row->title}}</a>
+                            <a href="/donor/{{$row->id}}">
+                                <span class="pr-1">{{$row->title}}</span>
+                            </a>
                         </td>
-                        <td>{{$row->short_desc}}</td>
+                        <td>
+                            <span class="pr-1">{{$row->short_desc}}</span>
+                        </td>
+                        <td>
+                            <span class="pr-1">{{$row->country}}</span>
+                        </td>
                     <tr>
                 @endforeach
                 </tbody>
@@ -32,12 +36,10 @@
     </div>
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
-            {{ $projects->links() }}
+            {{ $subscriptions->links() }}
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <a href="/project/create" class="btn btn-primary">{{ __('Add Project') }}</a>
+        <div class="col-12">
+            <a href="/donor/create" class="btn btn-lg btn-primary">{{ __('Add Donor') }}</a>
         </div>
 
     </div>

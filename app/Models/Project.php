@@ -2,22 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Project extends Model
+class Project extends BaseModel
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'title',
-        'description',
-        'image_url', 
+        'short_desc',
+        'full_desc',
+        'logo_url',
         'start_date',
-        'end_date'
+        'end_date',
     ];
 
-    public function donors() 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function donors()
     {
-        return $this->hasMany(Donor::class);
+        return $this->belongsToMany(Donor::class)
+            ->using('\App\Models\DonorProject');
     }
-
-
 }

@@ -10,8 +10,8 @@
                 <thead>
                     <tr>
                         <th>{{ __('Title') }}</th>
+                        <th>{{ __('Short description') }}</th>
                         <th>{{ __('Duration') }}</th>
-                        <th>{{ __('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,11 +20,8 @@
                         <td>
                             <a class="pr-3" href="/event/{{$row->id}}">{{$row->title}}</a>
                         </td>
+                        <td>{{$row->short_desc}}</td>
                         <td>{{durationToStr($row->duration)}}</td>
-                        <td>
-                            <a href="/event/{{$row->id}}/edit" class="glyphicon glyphicon-edit pr-2" title="Edit" ></a>
-                            <a href="/schedule/event/{{$row->id}}" class="glyphicon glyphicon-calendar pr-2" title="Schedule"></a>
-                        </td>
                     <tr>
                 @endforeach
                 </tbody>

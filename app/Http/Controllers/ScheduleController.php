@@ -152,7 +152,7 @@ class ScheduleController extends Controller
     public function trainerCreate(Schedule $schedule)
     {
         //dd($schedule);
-        
+
         $trainers = TrainerResource::collection(Trainer::all());
         dd($trainers);
 

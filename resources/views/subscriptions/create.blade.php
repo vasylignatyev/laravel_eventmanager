@@ -3,28 +3,13 @@
 @section('content')
 
 <div class="container">
-    <h1>{{__('Create Project')}}</h1>
-    <form method="POST" action="{{route('project.store')}}" enctype="multipart/form-data">
+    <h1>{{__('Create Donor')}}</h1>
+    <form method="POST" action="{{route('donor.store')}}">
         @csrf
-        <div class="form-group row">
-            <label for="logo" class="col-md-4 col-form-label text-md-right">{{__('Logo')}}</label>
-            <div class="col-md-6">
-                <input
-                    type="file"
-                    class="form-control-file"
-                    id="logo"
-                    name="logo">
-                @if ($errors->has('image'))
-                    <strong>{{ $errors->first('image') }}</strong>
-                @endif
-            </div>
-        </div>
-
         <div class="form-group row">
             <label for="title" class="col-md-4 col-form-label text-md-right">{{__('Title')}}</label>
             <div class="col-md-6">
                 <input
-                    id="title"
                     type="text"
                     class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
                     name="title"
@@ -39,6 +24,7 @@
                 @endif
             </div>
         </div>
+
         <div class="form-group row">
             <label for="short_desc" class="col-md-4 col-form-label text-md-right">{{__('Short Description')}}</label>
             <div class="col-md-6">
@@ -46,8 +32,10 @@
                     id="short_desc"
                     class="form-control{{ $errors->has('short_desc') ? ' is-invalid' : '' }}"
                     name="short_desc"
+                    value="{{ old('short_desc')}}"
                     placeholder="{{__('Short Description')}}"
-                    autocomplete="short_desc">"{{old('short_desc')}}"</textarea>
+                    autocomplete="short_desc">
+                </textarea>
                 @if ($errors->has('short_desc'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('short_desc') }}</strong>
@@ -55,6 +43,7 @@
                 @endif
             </div>
         </div>
+
         <div class="form-group row">
             <label for="full_desc" class="col-md-4 col-form-label text-md-right">{{__('Full Description')}}</label>
             <div class="col-md-6">
@@ -62,8 +51,10 @@
                     id="full_desc"
                     class="form-control{{ $errors->has('full_desc') ? ' is-invalid' : '' }}"
                     name="full_desc"
+                    value="{{ old('full_desc')}}"
                     placeholder="{{__('Full Description')}}"
-                    autocomplete="full_desc">{{old('full_desc')}}</textarea>
+                    autocomplete="full_desc">
+                </textarea>
                 @if ($errors->has('full_desc'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('full_desc') }}</strong>
@@ -73,38 +64,19 @@
         </div>
 
         <div class="form-group row">
-            <label for="start_date" class="col-md-4 col-form-label text-md-right">{{__('Start Date')}}</label>
+            <label for="country" class="col-md-4 col-form-label text-md-right">{{__('Country')}}</label>
             <div class="col-md-6">
                 <input
-                    id="start_date"
-                    type="date"
-                    class="form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}"
-                    name="start_date"
-                    value="{{ old('start_date') }}"
-                    autocomplete="start_date" autofocus>
+                    type="text"
+                    class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}"
+                    name="country"
+                    value="{{ old('country') }}"
+                    placeholder="{{__('Country')}}"
+                    autocomplete="country" autofocus>
 
-                @if ($errors->has('start_date'))
+                @if ($errors->has('country'))
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('start_date') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="end_date" class="col-md-4 col-form-label text-md-right">{{__('End Date')}}</label>
-            <div class="col-md-6">
-                <input
-                    id="end_date"
-                    type="date"
-                    class="form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}"
-                    name="end_date"
-                    value="{{ old('end_date') }}"
-                    autocomplete="end_date" autofocus>
-
-                @if ($errors->has('end_date'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('end_date') }}</strong>
+                        <strong>{{ $errors->first('country') }}</strong>
                     </span>
                 @endif
             </div>

@@ -7,7 +7,11 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <img src="/storage/{{$company->logo_url}}" style="max-height: 150px; max-width: 150px;">
+                @if ($company->logo_url)
+                    <img src="/storage/{{$company->logo_url}}" style="max-height: 150px; max-width: 150px;">
+                @else
+                    <img src="/images/not-available.jpg" style="max-height: 150px; max-width: 150px;">
+                @endif
             </div>
         </div>
         <div class="form-group row">

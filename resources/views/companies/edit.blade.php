@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <h1>{{__('Edit company')}}</h1>
+        <h1>{{__('Edit')}}</h1>
         <form action="/company/{{$company->id}}" enctype="multipart/form-data" method="POST" >
             @csrf
             @method("PATCH")

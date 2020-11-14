@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 
 class CompanyController extends Controller
@@ -18,11 +20,11 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
+     * @return Application|Factory|Response|View
      */
     public function index()
     {
-        $companies = DB::table('companies')->select(DB::raw(self::ROW))->paginate(10);
+        $companies = DB::table('companies')->select(DB::raw(self::ROW))->orderBy('title')->paginate(10);
         return view('companies.index', compact('companies'));
 
     }
@@ -30,7 +32,7 @@ class CompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|\Illuminate\Contracts\View\Factory|Response|\Illuminate\View\View
+     * @return Application|Factory|Response|View
      */
     public function create()
     {
@@ -71,12 +73,11 @@ class CompanyController extends Controller
      * Display the specified resource.
      *
      * @param Company $company
-     * @return void
+     * @return Application|Factory|View|void
      */
     public function show(Company $company)
     {
         return view('companies.show', compact('company'));
-
     }
 
     /**

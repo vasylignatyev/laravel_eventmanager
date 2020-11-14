@@ -3,23 +3,23 @@
 @section('content')
 
 <div class="container">
-    <h1>Companies</H1>
+    <h1>{{__('Companies')}}</h1>
     <div class="row">
         <div class="col-12 d-flex justify-content-center">
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>{{ __('Title') }}</th>
-                    <th>{{ __('Action') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($companies as $row)
                     <tr>
-                        <td>{{$row->title}}</td>
-                        <td class="d-flex">
-                            <a href="/company/{{$row->id}}" class="glyphicon glyphicon-file pr-2" title="Edit" ></a>
-                        </td>
+                        <td>
+                            <a href="/company/{{$row->id}}">
+                                {{$row->title}}
+                            </a>
+                       </td>
                     <tr>
                 @endforeach
                 </tbody>

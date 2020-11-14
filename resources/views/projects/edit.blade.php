@@ -4,8 +4,23 @@
 
 <div class="container">
     <h1>{{__('Edit Project')}}</h1>
-    <form method="POST" action="{{route('project.store')}}">
+    <form method="POST" action="{{route('project.update', ['project' => $project->id])}}" enctype="multipart/form-data">
         @csrf
+        @method('PATCH')
+        <div class="form-group row">
+            <div class="form-group row">
+                <div class="col-md-6 col-form-label d-flex align-items-end">
+                    <img src="/storage/{{$project->logo_url}}" style="max-height: 150px; max-width: 150px;">
+                    <div class="pl-3">
+                        <input
+                            type="file"
+                            id="logo"
+                            name="logo"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group row">
             <label for="title" class="col-md-4 col-form-label text-md-right">{{__('Title')}}</label>
             <div class="col-md-6">
@@ -14,7 +29,7 @@
                     type="text"
                     class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
                     name="title"
-                    value="{{ $project->title }}"
+                    value="{{$project->title}}"
                     placeholder="{{__('Title')}}"
                     autocomplete="title" autofocus>
 
@@ -29,13 +44,9 @@
             <label for="short_desc" class="col-md-4 col-form-label text-md-right">{{__('Short Description')}}</label>
             <div class="col-md-6">
                 <textarea
-                    id="short_desc"
                     class="form-control{{ $errors->has('short_desc') ? ' is-invalid' : '' }}"
-                    name="short_desc"
-                    value="{{ $project->short_desc }}"
-                    placeholder="{{__('Short Description')}}"
-                    autocomplete="short_desc">
-                </textarea>
+                    id="short_desc"
+                    name="short_desc">{{$project->short_desc}}</textarea>
                 @if ($errors->has('short_desc'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('short_desc') }}</strong>
@@ -48,12 +59,8 @@
             <div class="col-md-6">
                 <textarea
                     id="full_desc"
-                    class="form-control{{ $errors->has('full_desc') ? ' is-invalid' : '' }}"
                     name="full_desc"
-                    placeholder="{{__('Full Description')}}"
-                    autocomplete="full_desc">
-                    {{ $project->full_desc }}
-                </textarea>
+ A                  class="form-control{{ $errors->has('full_desc') ? ' is-invalid' : '' }}" >{{ $project->full_desc }}</textarea>
                 @if ($errors->has('full_desc'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('full_desc') }}</strong>
@@ -70,7 +77,7 @@
                     type="date"
                     class="form-control{{ $errors->has('start_date') ? ' is-invalid' : '' }}"
                     name="start_date"
-                    value="{{ old('start_date') }}"
+                    value="{{$project->start_date}}"
                     autocomplete="start_date" autofocus>
 
                 @if ($errors->has('start_date'))
@@ -89,7 +96,7 @@
                     type="date"
                     class="form-control{{ $errors->has('end_date') ? ' is-invalid' : '' }}"
                     name="end_date"
-                    value="{{ old('end_date') }}"
+                    value="{{$project->end_date}}"
                     autocomplete="end_date" autofocus>
 
                 @if ($errors->has('end_date'))
@@ -103,7 +110,7 @@
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
                 <button type="submit" class="btn btn-primary">
-                    {{__('Create')}}
+                    {{__('Update')}}
                 </button>
             </div>
         </div>

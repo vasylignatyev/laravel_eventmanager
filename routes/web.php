@@ -48,6 +48,14 @@ Route::resource('donor', 'DonorController');
 Route::get('donor/{donor}/projects', 'DonorController@projectsIndex')->name('donor.projects.index');
 Route::resource('project', 'ProjectController');
 
+Route::get('project/{project}/donors/edit', 'DonorProjectController@editDonors')->name('donors_projects.editDonors');
+Route::post('project/{project}/donors', 'DonorProjectController@saveDonors')->name('donors_projects.saveDonors');
+
+Route::get('donor/{donor}/projects/edit', 'DonorProjectController@editProjects')->name('donors_projects.editProjects');
+Route::post('donor/{donor}/projects', 'DonorProjectController@saveProjects')->name('donors_projects.saveProjects');
+
 Route::resource('address', 'AddressController');
 Route::resource('company', 'CompanyController');
+Route::resource('customer', 'CustomerController');
+Route::resource('subscription', 'SubscriptionController');
 

@@ -38,6 +38,10 @@
                         <li class="pr-4"><a href="/event">{{_('Events')}}</a></li>
                         <li class="pr-4"><a href="/schedule">{{_('Schedules')}}</a></li>
                         <li class="pr-4"><a href="/trainer">{{_('Trainers')}}</a></li>
+                        <li class="pr-4"><a href="/donor">{{_('Donors')}}</a></li>
+                        <li class="pr-4"><a href="/company">{{_('Companies')}}</a></li>
+                        <li class="pr-4"><a href="/project">{{_('Projects')}}</a></li>
+                        <li class="pr-4"><a href="/customer">{{_('Customers')}}</a></li>
 
                     </ul>
 

@@ -22,7 +22,6 @@
                 [
                     'class' => 'form-control-lg',
                     'placeholder' => _('Short Description'),
-//                    'rows' => 5,
                 ])
             }}
         </div>
